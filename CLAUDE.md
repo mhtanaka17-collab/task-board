@@ -13,6 +13,29 @@ task-board はタスクを管理するシンプルな Web アプリケーショ�
 - タスクを削除
 - 完了済みタスクはグレー表示（取り消し線付き）
 
+## デプロイ先
+
+https://mhtanaka17-collab.github.io/task-board/
+
+## 技術スタック
+
+- [React](https://react.dev/) 19
+- [TypeScript](https://www.typescriptlang.org/) 6
+- [Vite](https://vite.dev/) 8（ビルドツール、`@vitejs/plugin-react` 経由で React をサポート）
+- [oxlint](https://oxc.rs/docs/guide/usage/linter.html) — 静的解析
+- ホスティング: GitHub Pages（`.github/workflows/deploy.yml` で自動デプロイ）
+- 状態の永続化: ブラウザの `localStorage`（バックエンド・DBは使用しない）
+
+## コンポーネントの命名規約
+
+- コンポーネント名は **PascalCase**（例: `App`, `TaskItem`）とし、ファイル名もコンポーネント名と一致させる（例: `App.tsx`）。
+- 1ファイル1コンポーネントを基本とする。
+- コンポーネントは `function ComponentName() { ... }` の関数宣言 + `export default` で定義する（既存の `App` に合わせる）。
+- Props の型は `interface ComponentNameProps { ... }` として定義する。
+- ドメインの型（`Task` など）は PascalCase の単数名詞で定義する。
+- イベントハンドラは、コンポーネント内のローカル関数は「動詞 + 対象」（例: `addTask`, `toggleTask`, `deleteTask`）、外部から渡す props としてのコールバックは `onXxx`（例: `onToggle`, `onDelete`）と命名する。
+- コンポーネント用スタイルは同名の CSS ファイル（例: `App.tsx` → `App.css`）に定義し、`import './ComponentName.css'` で読み込む。
+
 ## Git 運用ルール
 
 **コードに変更を加えたら、コミットしてそのつど GitHub にプッシュすること。** ローカルに変更がコミットされたまま、あるいはプッシュされないまま放置しない。
@@ -40,8 +63,7 @@ task-board はタスクを管理するシンプルな Web アプリケーショ�
 
 ## GitHub Pages へのデプロイ
 
-`main` ブランチに push すると GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルドし、GitHub Pages に公開する。
-公開 URL: `https://mhtanaka17-collab.github.io/task-board/`
+`main` ブランチに push すると GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルドし、GitHub Pages に公開する。公開URLは「デプロイ先」を参照。
 
 - `vite.config.ts` の `base` はリポジトリ名に合わせて `/task-board/` に設定済み。リポジトリ名を変更した場合は合わせて更新すること。
 - 初回のみ、GitHub リポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に設定する必要がある。
