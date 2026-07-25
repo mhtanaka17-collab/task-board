@@ -33,6 +33,15 @@ task-board はタスクを管理するシンプルな Web アプリケーショ�
 
 ## ディレクトリ構成
 
-- `src/App.tsx` — タスクボードのメインコンポーネント（状態管理・追加/切り替え/削除ロジック）
+- `src/App.tsx` — タスクボードのメインコンポーネント（状態管理・追加/切り替え/削除ロジック、localStorage への永続化）
 - `src/App.css` — タスクボードのスタイル
 - `src/main.tsx` — エントリーポイント
+- `.github/workflows/deploy.yml` — GitHub Pages への自動デプロイ設定
+
+## GitHub Pages へのデプロイ
+
+`main` ブランチに push すると GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルドし、GitHub Pages に公開する。
+公開 URL: `https://mhtanaka17-collab.github.io/task-board/`
+
+- `vite.config.ts` の `base` はリポジトリ名に合わせて `/task-board/` に設定済み。リポジトリ名を変更した場合は合わせて更新すること。
+- 初回のみ、GitHub リポジトリの Settings → Pages → Build and deployment → Source を **GitHub Actions** に設定する必要がある。
